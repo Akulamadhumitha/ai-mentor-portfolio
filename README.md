@@ -36,4 +36,12 @@ Resume 3: Arun Pillai — 9 skills, 1.0 years exp
 
 ![empty input raises valueError screenshot](valueError.png)
 
+# Day 3 lab 3A completed - verification markdown file
+
+![verified md](Day3_Verification.md)
+
+# Day 3 Lab 3B completed - AI policy 1-Page PDF
+
+![generated 1 page pdf](Day3_3B_AI_Policy.pdf)
+
 ```
