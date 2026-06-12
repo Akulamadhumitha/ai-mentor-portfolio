@@ -1,0 +1,245 @@
+{
+  "name": "Daily Placement News Digest",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a037eb85-11ec-46bd-b55d-5ef2ceed3fc6",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://news.ycombinator.com/rss",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "dab19cab-241a-4b71-9704-27d647f657d8",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "f4de6516-0539-46cd-9de6-6314bcb043ae",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.groq.com/openai/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer GROP_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama-3.3-70b-versatile\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"You are a placement coach assistant. Summarize this news item in one concise bullet point.\\n\\nTitle: {{$json.title}}\\n\\nContent: {{$json.contentSnippet}}\"\n    }\n  ],\n  \"temperature\": 0.3\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        624,
+        0
+      ],
+      "id": "c2901506-7d2b-44cd-9fb2-d78685b6c0fb",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fromEmail": "krishnatulasi0302@gmail.com",
+        "toEmail": "krishnatulasi0302@gmail.com",
+        "subject": "Daily News Digest Test",
+        "html": "=<h2>Daily News Digest</h2>\n\n<p>{{ $json.choices[0].message.content }}</p>\n\n<hr>\n\n<p>Generated automatically by n8n + Groq</p>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        832,
+        0
+      ],
+      "id": "29ae0a23-cef2-4b73-89ec-cbe2eea7e096",
+      "name": "Send an Email",
+      "webhookId": "305901f9-23d2-4806-84cd-e0a90e387701",
+      "credentials": {
+        "smtp": {
+          "id": "JJJFfKHW7tkoXVhl",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Send an Email": [
+      {
+        "json": {
+          "accepted": [
+            "krishnatulasi0302@gmail.com"
+          ],
+          "rejected": [],
+          "ehlo": [
+            "SIZE 35882577",
+            "8BITMIME",
+            "AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH",
+            "ENHANCEDSTATUSCODES",
+            "PIPELINING",
+            "CHUNKING",
+            "SMTPUTF8"
+          ],
+          "envelopeTime": 892,
+          "messageTime": 831,
+          "messageSize": 942,
+          "response": "250 2.0.0 OK  1781230721 d9443c01a7336-2c42f7c5dd0sm3260565ad.20 - gsmtp",
+          "envelope": {
+            "from": "krishnatulasi0302@gmail.com",
+            "to": [
+              "krishnatulasi0302@gmail.com"
+            ]
+          },
+          "messageId": "<4e528712-b578-eacc-bffb-287e412d46e0@gmail.com>"
+        }
+      },
+      {
+        "json": {
+          "accepted": [
+            "krishnatulasi0302@gmail.com"
+          ],
+          "rejected": [],
+          "ehlo": [
+            "SIZE 35882577",
+            "8BITMIME",
+            "AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH",
+            "ENHANCEDSTATUSCODES",
+            "PIPELINING",
+            "CHUNKING",
+            "SMTPUTF8"
+          ],
+          "envelopeTime": 890,
+          "messageTime": 1042,
+          "messageSize": 931,
+          "response": "250 2.0.0 OK  1781230724 d2e1a72fcca58-8434b05d7d7sm465589b3a.60 - gsmtp",
+          "envelope": {
+            "from": "krishnatulasi0302@gmail.com",
+            "to": [
+              "krishnatulasi0302@gmail.com"
+            ]
+          },
+          "messageId": "<e978b9e0-f3f9-7629-f602-0e41ee81822f@gmail.com>"
+        }
+      },
+      {
+        "json": {
+          "accepted": [
+            "krishnatulasi0302@gmail.com"
+          ],
+          "rejected": [],
+          "ehlo": [
+            "SIZE 35882577",
+            "8BITMIME",
+            "AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH",
+            "ENHANCEDSTATUSCODES",
+            "PIPELINING",
+            "CHUNKING",
+            "SMTPUTF8"
+          ],
+          "envelopeTime": 873,
+          "messageTime": 847,
+          "messageSize": 819,
+          "response": "250 2.0.0 OK  1781230727 41be03b00d2f7-c866325e477sm518628a12.10 - gsmtp",
+          "envelope": {
+            "from": "krishnatulasi0302@gmail.com",
+            "to": [
+              "krishnatulasi0302@gmail.com"
+            ]
+          },
+          "messageId": "<563d8312-8b15-d029-5e40-ad9877e4c3d2@gmail.com>"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send an Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "35136b3a-b250-4865-b0d1-81c1eaa964c3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bf6d7d2fdb21f5569989f392a65690d3460d9c54be05cd09d8554d83566e16f1"
+  },
+  "nodeGroups": [],
+  "id": "dThd5mnmtzcZ4DZG",
+  "tags": []
+}
