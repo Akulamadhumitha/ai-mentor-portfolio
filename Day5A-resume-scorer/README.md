@@ -27,5 +27,7 @@ This is vibe-coded. To productionise, I would add caching, rate limiting and bet
 ### What Continue.dev did well
 Helped scaffold Streamlit components quickly.
 
+**Live URL:** [https://your-app.streamlit.app](https://ai-mentor-portfolio-8mahkeec7kmxdkr6qwepzq.streamlit.app/)
+
 ### What I had to fix
 Gemini API quota and error handling.
