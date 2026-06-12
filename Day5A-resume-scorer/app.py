@@ -16,7 +16,7 @@ with col1:
 with col2:
     jd = st.text_area("Paste job description", height=400)
 
-api_key = st.text_input(
+api_key = st.secrets.get("GEMINI_API_KEY", None) or st.text_input(
     "Gemini API Key",
     type="password",
     help="Paste your Gemini API key from Google AI Studio"
